@@ -1,0 +1,61 @@
+<!-- gallery.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gallery | My Art Portfolio</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>…your nav here…</header>
+
+  <section class="gallery" id="galleryContainer">
+     <div class="art-item"><img src="images/art1.jpg" alt="Artwork 1" onclick="openLightbox(this)"></div>
+     <div class="art-item"><img src="images/art2.jpg" alt="Artwork 2" onclick="openLightbox(this)"></div>
+     <div class="art-item"><img src="images/art3.jpg" alt="Artwork 3" onclick="openLightbox(this)"></div>
+     <div class="art-item"><img src="images/art4.jpg" alt="Artwork 4" onclick="openLightbox(this)"></div>
+     <div class="art-item"><img src="images/art5.jpg" alt="Artwork 5" onclick="openLightbox(this)"></div>
+     <div class="art-item"><img src="images/art6.jpg" alt="Artwork 6" onclick="openLightbox(this)"></div>
+     <div class="art-item"><img src="images/art7.jpg" alt="Artwork 7" onclick="openLightbox(this)"></div>
+     <div class="art-item"><img src="images/art8.jpg" alt="Artwork 8" onclick="openLightbox(this)"></div>
+     <div class="art-item"><img src="images/art9.jpg" alt="Artwork 9" onclick="openLightbox(this)"></div>
+     <div class="art-item"><img src="images/art10.jpg" alt="Artwork 10" onclick="openLightbox(this)"></div>
+     <div class="art-item"><img src="images/art11.jpg" alt="Artwork 11" onclick="openLightbox(this)"></div>
+     <div class="art-item"><img src="images/art12.jpg" alt="Artwork 12" onclick="openLightbox(this)"></div>
+
+  </section>
+
+  <footer>…</footer>
+
+  <script>
+    // 1. Fetch the artworks JSON
+    fetch('/api/artworks')
+      .then(res => res.json())
+      .then(artworks => {
+        const container = document.getElementById('galleryContainer');
+        artworks.forEach(art => {
+          // 2. Create a link to the art’s detail page
+          const link = document.createElement('a');
+          link.href = `/art/${art._id}`;
+          link.className = 'art-item';
+
+          // 3. Create & append the image
+          const img = document.createElement('img');
+          img.src = art.imageUrl;
+          img.alt = art.title;
+          link.appendChild(img);
+
+          // 4. (Optional) add title below image
+          const cap = document.createElement('div');
+          cap.className = 'caption';
+          cap.textContent = art.title;
+          link.appendChild(cap);
+
+          container.appendChild(link);
+        });
+      })
+      .catch(err => console.error('Failed to load artworks:', err));
+  </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= art.title %> | My Art</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header>
+    <h1><%= art.title %></h1>
+    <a href="/gallery.html">← Back to Gallery</a>
+  </header>
+
+  <section class="art-view">
+    <img src="<%= art.imageUrl %>" alt="<%= art.title %>">
+  </section>
+
+  <section class="comments-section">
+    <h2>Comments</h2>
+
+    <% if (art.comments.length === 0) { %>
+      <p>No comments yet. Be the first!</p>
+    <% } %>
+
+    <ul class="comment-list">
+      <% art.comments.forEach(comment => { %>
+        <li>
+          <strong><%= comment.username %>:</strong>
+          <%= comment.text %>
+          <small><%= comment.createdAt.toLocaleString() %></small>
+        </li>
+      <% }) %>
+    </ul>
+
+    <form action="/art/<%= art._id %>/comment" method="POST" class="comment-form">
+      <input type="text" name="username" placeholder="Your name" required>
+      <textarea name="text" placeholder="Write a comment..." required></textarea>
+      <button type="submit">Post Comment</button>
+    </form>
+  </section>
+</body>
+</html>
